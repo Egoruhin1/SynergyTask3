@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    
+    <h2>Comments:</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.author.username }}: {{ comment.text }}</li>
+        {% empty %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Add a Comment:</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <a href="{% url 'blog-home' %}">Back to home</a>
+</body>
+</html>
+
+

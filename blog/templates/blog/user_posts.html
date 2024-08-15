@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Posts by {{ user_profile.username }}{% endblock %}
+
+{% block content %}
+<h1>Posts by {{ user_profile.username }}</h1>
+{% if user != user_profile %}
+    {% if user_profile in user.subscriptions.all %}
+        <p>You are subscribed to {{ user_profile.username }}</p>
+    {% else %}
+        <a href="{% url 'subscribe-user' user_profile.username %}">Subscribe</a>
+    {% endif %}
+{% endif %}
+{% for post in user_posts %}
+    <div>
+        <h2><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+        <p>By {{ post.author }} on {{ post.created_at }}</p>
+        <p>{{ post.content|truncatewords:20 }}</p>
+        {% if user == post.author %}
+            <a href="{% url 'post-edit' post.pk %}">Edit</a> |
+            <a href="{% url 'post-delete' post.pk %}">Delete</a>
+        {% endif %}
+    </div>
+{% empty %}
+    <p>No posts yet.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,10 @@
+<!-- profile.html -->
+{% extends 'blog/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1>Profile</h1>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+{% endblock %}
